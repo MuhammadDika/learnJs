@@ -3,12 +3,12 @@ import { allLessons } from "@/lib/lessons";
 import { notFound } from "next/navigation";
 import LessonView from "./lesson-view";
 
-export default async function LessonPage({ params }: { params: { id: string } }): Promise<JSX.Element> {
-  const lessonData = allLessons[params.id];
+export default async function LessonPage(props: any): Promise<JSX.Element> {
+  const lessonData = allLessons[props.params.id];
 
   if (!lessonData) {
     notFound();
   }
 
-  return <LessonView lessonData={lessonData} courseId={params.id} />;
+  return <LessonView lessonData={lessonData} courseId={props.params.id} />;
 }
