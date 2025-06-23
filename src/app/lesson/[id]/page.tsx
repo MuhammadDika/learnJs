@@ -2,7 +2,13 @@ import { allLessons } from "@/lib/lessons";
 import { notFound } from "next/navigation";
 import LessonView from "./lesson-view";
 
-export default async function LessonPage({ params }: { params: { id: string } }) {
+type LessonPageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function LessonPage({ params }: LessonPageProps) {
   const lessonData = allLessons[params.id];
 
   if (!lessonData) {
@@ -10,4 +16,4 @@ export default async function LessonPage({ params }: { params: { id: string } })
   }
 
   return <LessonView lessonData={lessonData} courseId={params.id} />;
-} 
+}
