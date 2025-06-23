@@ -2,7 +2,7 @@ import { allLessons } from "@/lib/lessons";
 import { notFound } from "next/navigation";
 import LessonView from "./lesson-view";
 
-export default function LessonPage({ params }: { params: { id: string } }) {
+export default async function LessonPage({ params }: { params: { id: string } }) {
   const lessonData = allLessons[params.id];
 
   if (!lessonData) {
