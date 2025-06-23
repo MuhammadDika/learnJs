@@ -1,4 +1,6 @@
-export const allLessons: Record<string, any> = {
+import { LessonData } from "./types";
+
+export const allLessons: Record<string, LessonData> = {
   "1": {
     title: "JavaScript Basics",
     subtitle: "Lesson 1: Functions and Scope",

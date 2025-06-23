@@ -9,11 +9,12 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { getProgress, getLastActiveCourse } from "@/lib/progress"
 import { allLessons } from "@/lib/lessons"
+import { Course, ProgressData } from "@/lib/types"
 
 export default function Dashboard() {
-  const [currentStreak, setCurrentStreak] = useState(7)
-  const [totalXP, setTotalXP] = useState(1250)
-  const [progressData, setProgressData] = useState<any>({})
+  const [currentStreak] = useState(7)
+  const [totalXP] = useState(1250)
+  const [progressData, setProgressData] = useState<ProgressData>({})
   const [lastActiveCourseId, setLastActiveCourseId] = useState<string | null>(null)
 
   useEffect(() => {
@@ -21,7 +22,7 @@ export default function Dashboard() {
     setLastActiveCourseId(getLastActiveCourse())
   }, [])
 
-  const initialCourses = [
+  const initialCourses: Course[] = [
     {
       id: 1,
       title: "JavaScript Basics",
@@ -48,7 +49,7 @@ export default function Dashboard() {
     },
   ]
   
-  const courses = initialCourses.map(course => {
+  const courses: Course[] = initialCourses.map(course => {
     const courseProgress = progressData[course.id]?.completedSteps || []
     const totalSteps = allLessons[course.id]?.steps.length || 0
     const completedLessons = courseProgress.length
@@ -214,7 +215,7 @@ export default function Dashboard() {
                         className={`w-full ${course.isActive ? "bg-[#F7DF1E] text-black hover:bg-[#F7DF1E]/90" : "bg-gray-800 text-gray-400"}`}
                         disabled={!course.isActive}
                       >
-                        {course.progress > 0 ? "Continue" : "Start Course"}
+                        {course.progress && course.progress > 0 ? "Continue" : "Start Course"}
                         <ChevronRight className="w-4 h-4 ml-2" />
                       </Button>
                     </Link>

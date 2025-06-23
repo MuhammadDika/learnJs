@@ -8,14 +8,15 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import { completeStep, setLastActiveCourse } from "@/lib/progress"
+import { LessonData, LessonStep } from "@/lib/types"
 
-export default function LessonView({ lessonData, courseId }: { lessonData: any, courseId: string }) {
+export default function LessonView({ lessonData, courseId }: { lessonData: LessonData, courseId: string }) {
   useEffect(() => {
     setLastActiveCourse(courseId);
   }, [courseId]);
 
   const [currentStep, setCurrentStep] = useState(0)
-  const [userCode, setUserCode] = useState(lessonData.steps.find((s: any) => s.type === 'practice')?.starterCode || "")
+  const [userCode, setUserCode] = useState(lessonData.steps.find((s: LessonStep) => s.type === 'practice')?.starterCode || "")
   const [showHint, setShowHint] = useState(false)
   const [output, setOutput] = useState("")
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
@@ -66,6 +67,7 @@ export default function LessonView({ lessonData, courseId }: { lessonData: any, 
     setOutput("");
     setIsCorrect(null);
     const practiceStep = lessonSteps[currentStep];
+    if (!practiceStep.test) return;
     const test = practiceStep.test;
 
     const capturedLogs: string[] = [];
@@ -96,7 +98,7 @@ export default function LessonView({ lessonData, courseId }: { lessonData: any, 
         }
       } else if (test.type === "async") {
         const originalFetch = window.fetch;
-        // @ts-ignore
+        // @ts-expect-error - Mocking fetch for isolated testing
         window.fetch = async (url: string) => {
           if (url === test.url) {
             return new Response(JSON.stringify(test.mockResponse), { status: 200 });
@@ -106,12 +108,11 @@ export default function LessonView({ lessonData, courseId }: { lessonData: any, 
 
         await new Function(`return (async () => { ${userCode} })()`)();
         
-        // @ts-ignore
         window.fetch = originalFetch;
         
-        const finalOutput = capturedLogs.join('\n');
+        const finalOutput = capturedLogs.join('\n') || "";
         setOutput(`Console Logs:\n${finalOutput}`);
-        if (finalOutput.includes(test.expectedLog)) {
+        if (finalOutput.includes(test.expectedLog || '')) {
           setIsCorrect(true);
         } else {
           setIsCorrect(false);
@@ -334,7 +335,7 @@ export default function LessonView({ lessonData, courseId }: { lessonData: any, 
             </Button>
 
             <div className="flex space-x-2">
-              {lessonSteps.map((_: any, index: number) => (
+              {lessonSteps.map((_: LessonStep, index: number) => (
                 <div
                   key={index}
                   className={`w-2 h-2 rounded-full ${index <= currentStep ? "bg-[#F7DF1E]" : "bg-gray-700"}`}
