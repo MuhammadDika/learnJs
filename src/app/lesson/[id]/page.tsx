@@ -3,12 +3,13 @@ import { allLessons } from "@/lib/lessons";
 import { notFound } from "next/navigation";
 import LessonView from "./lesson-view";
 
-export default async function LessonPage({ params }: { params: Record<string, string> }): Promise<JSX.Element> {
-  const lessonData = allLessons[params.id];
+export default async function LessonPage({ params }: { params: Promise<{ id: string }> }): Promise<JSX.Element> {
+  const awaitedParams = await params;
+  const lessonData = allLessons[awaitedParams.id];
 
   if (!lessonData) {
     notFound();
   }
 
-  return <LessonView lessonData={lessonData} courseId={params.id} />;
+  return <LessonView lessonData={lessonData} courseId={awaitedParams.id} />;
 }
