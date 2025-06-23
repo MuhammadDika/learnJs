@@ -118,8 +118,12 @@ export default function LessonView({ lessonData, courseId }: { lessonData: Lesso
           setIsCorrect(false);
         }
       }
-    } catch (error: any) {
-      setOutput(`Error: ${error.message}`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setOutput(`Error: ${error.message}`);
+      } else {
+        setOutput("An unknown error occurred.");
+      }
       setIsCorrect(false);
     } finally {
       console.log = originalLog;

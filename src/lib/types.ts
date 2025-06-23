@@ -1,9 +1,9 @@
 export interface Test {
   type: "function" | "dom" | "async";
   call?: string;
-  expected?: any;
+  expected?: string | number | boolean;
   url?: string;
-  mockResponse?: any;
+  mockResponse?: Record<string, unknown>;
   expectedLog?: string;
 }
 
