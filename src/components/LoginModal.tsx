@@ -33,7 +33,7 @@ export default function LoginModal({ isOpen, onClose }: { isOpen: boolean; onClo
       } else {
         alert(data.message || (isSignUp ? "Sign-up failed" : "Login failed"))
       }
-    } catch (error) {
+    } catch {
       alert("An error occurred during " + (isSignUp ? "sign-up" : "login"))
     }
   }

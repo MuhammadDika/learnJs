@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     users.push({ username, password })
 
     return NextResponse.json({ success: true, message: "User created successfully" })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Invalid request" },
       { status: 400 }
