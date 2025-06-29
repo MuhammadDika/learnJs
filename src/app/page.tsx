@@ -10,12 +10,14 @@ import Link from "next/link"
 import { getProgress, getLastActiveCourse } from "@/lib/progress"
 import { allLessons } from "@/lib/lessons"
 import { Course, ProgressData } from "@/lib/types"
+import LoginModal from "@/components/LoginModal"
 
 export default function Dashboard() {
   const [currentStreak] = useState(7)
   const [totalXP] = useState(1250)
   const [progressData, setProgressData] = useState<ProgressData>({})
   const [lastActiveCourseId, setLastActiveCourseId] = useState<string | null>(null)
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
 
   useEffect(() => {
     setProgressData(getProgress())
@@ -78,7 +80,7 @@ export default function Dashboard() {
       <header className="border-b border-gray-800 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-[#F7DF1E] rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#F7DF1E] rounded-xl flex items-center justify-center">
               <span className="text-black font-bold text-sm">JS</span>
             </div>
             <h1 className="text-xl font-bold">LearnJS</h1>
@@ -90,10 +92,10 @@ export default function Dashboard() {
             </div>
             <Button
               variant="outline"
-              size="icon"
-              className="border-gray-700 hover:bg-gray-800 transition-colors duration-200 ease-in-out"
+              className="border-gray-700 bg-gray-700 hover:bg-gray-700 rounded-2xl w-10 h-10 p-2"
+              onClick={() => setIsLoginOpen(true)}
             >
-              <User className="w-4 h-4" />
+              <User className="w-4 h-4 text-gray-300" />
             </Button>
           </div>
         </div>
@@ -105,7 +107,7 @@ export default function Dashboard() {
           <Card className="bg-gray-900 border-gray-800">
             <CardContent className="p-6">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-[#F7DF1E]/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#F7DF1E]/20 rounded-2xl flex items-center justify-center">
                   <span className="text-2xl">🔥</span>
                 </div>
                 <div>
@@ -119,7 +121,7 @@ export default function Dashboard() {
           <Card className="bg-gray-900 border-gray-800">
             <CardContent className="p-6">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-[#F7DF1E]/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#F7DF1E]/20 rounded-2xl flex items-center justify-center">
                   <Trophy className="w-6 h-6 text-[#F7DF1E]" />
                 </div>
                 <div>
@@ -133,7 +135,7 @@ export default function Dashboard() {
           <Card className="bg-gray-900 border-gray-800">
             <CardContent className="p-6">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-[#F7DF1E]/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 bg-[#F7DF1E]/20 rounded-2xl flex items-center justify-center">
                   <CheckCircle className="w-6 h-6 text-[#F7DF1E]" />
                 </div>
                 <div>
@@ -163,7 +165,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <Link href={`/lesson/${lastCourse.id}`}>
-                    <Button className="bg-[#F7DF1E] text-black hover:bg-[#F7DF1E]/90 ml-6">
+                    <Button className="bg-[#F7DF1E] text-black hover:bg-[#F7DF1E]/90 ml-6 rounded-xl">
                       <Play className="w-4 h-4 mr-2" />
                       Continue
                     </Button>
@@ -230,6 +232,28 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      {/* Recent Achievements */}
+      <div className="container mx-auto px-4">
+        <h2 className="text-2xl font-bold mb-4">Recent Achievements</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {recentAchievements.map((achievement, index) => (
+            <Card key={index} className="bg-gray-900 border-gray-800">
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">{achievement.icon}</span>
+                  <div>
+                    <div className="font-semibold text-[#F7DF1E]">{achievement.title}</div>
+                    <p className="text-sm text-gray-400">{achievement.description}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </div>
   )
 }

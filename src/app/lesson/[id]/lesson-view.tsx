@@ -138,7 +138,7 @@ export default function LessonView({ lessonData, courseId }: { lessonData: Lesso
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link href="/">
-                <Button variant="ghost" size="icon" className="hover:bg-gray-800">
+                <Button variant="ghost" size="icon" className="hover:bg-gray-800 rounded-xl">
                   <ArrowLeft className="w-4 h-4" />
                 </Button>
               </Link>
@@ -206,7 +206,7 @@ export default function LessonView({ lessonData, courseId }: { lessonData: Lesso
                 <div className="bg-black rounded-lg border border-gray-700">
                   <div className="flex items-center justify-between p-3 border-b border-gray-700">
                     <span className="text-sm text-gray-400">Code Editor</span>
-                    <Button onClick={runCode} size="sm" className="bg-[#F7DF1E] text-black hover:bg-[#F7DF1E]/90">
+                    <Button onClick={runCode} size="sm" className="bg-[#F7DF1E] text-black hover:bg-[#F7DF1E]/90 rounded-xl">
                       <Play className="w-3 h-3 mr-1" />
                       Run
                     </Button>
@@ -247,7 +247,7 @@ export default function LessonView({ lessonData, courseId }: { lessonData: Lesso
                 <Button
                   variant="outline"
                   onClick={() => setShowHint(!showHint)}
-                  className="border-gray-600 hover:bg-gray-800"
+                  className="border-gray-600 hover:bg-gray-800 rounded-xl"
                 >
                   {showHint ? "Hide Hint" : "Show Hint"}
                 </Button>
@@ -273,7 +273,7 @@ export default function LessonView({ lessonData, courseId }: { lessonData: Lesso
                     const isCorrectAnswer = index === currentLesson.correct
                     const isSelected = index === selectedOption
 
-                    let buttonClass = "w-full justify-start text-left h-auto p-4 border-gray-700"
+                    let buttonClass = "w-full justify-start text-left h-auto p-4 border-gray-700 rounded-xl"
 
                     if (submittedQuiz) {
                       if (isCorrectAnswer) {
@@ -332,7 +332,7 @@ export default function LessonView({ lessonData, courseId }: { lessonData: Lesso
               variant="outline"
               onClick={handlePrevious}
               disabled={currentStep === 0}
-              className="border-gray-700 hover:bg-gray-800"
+              className="border-gray-700 hover:bg-gray-800 rounded-xl"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous
@@ -349,13 +349,13 @@ export default function LessonView({ lessonData, courseId }: { lessonData: Lesso
 
             {currentStep === lessonSteps.length - 1 ? (
               <Link href="/">
-                <Button className="bg-[#F7DF1E] text-black hover:bg-[#F7DF1E]/90">
+                <Button className="bg-[#F7DF1E] text-black hover:bg-[#F7DF1E]/90 rounded-xl">
                   Complete Lesson
                   <CheckCircle className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
             ) : (
-              <Button onClick={handleNext} className="bg-[#F7DF1E] text-black hover:bg-[#F7DF1E]/90">
+              <Button onClick={handleNext} className="bg-[#F7DF1E] text-black hover:bg-[#F7DF1E]/90 rounded-xl">
                 Next
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
