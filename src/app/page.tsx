@@ -88,7 +88,11 @@ export default function Dashboard() {
               <Trophy className="w-5 h-5" />
               <span className="font-semibold">{totalXP} XP</span>
             </div>
-            <Button variant="outline" size="icon" className="border-gray-700 hover:bg-gray-800">
+            <Button
+              variant="outline"
+              size="icon"
+              className="border-gray-700 hover:bg-gray-800 transition-colors duration-200 ease-in-out"
+            >
               <User className="w-4 h-4" />
             </Button>
           </div>
@@ -219,26 +223,6 @@ export default function Dashboard() {
                         <ChevronRight className="w-4 h-4 ml-2" />
                       </Button>
                     </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Recent Achievements */}
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Recent Achievements</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {recentAchievements.map((achievement, index) => (
-              <Card key={index} className="bg-gray-900 border-gray-800">
-                <CardContent className="p-4">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-2xl">{achievement.icon}</span>
-                    <div>
-                      <div className="font-semibold text-[#F7DF1E]">{achievement.title}</div>
-                      <p className="text-sm text-gray-400">{achievement.description}</p>
-                    </div>
                   </div>
                 </CardContent>
               </Card>
