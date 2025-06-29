@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server"
 
-// In-memory user store shared with login route
-let users = [
+// In-memory user store - in production, this should be a database
+const initialUsers = [
   { username: "user1", password: "password1" },
   { username: "user2", password: "password2" },
 ]
+
+// This is a simple in-memory store for demo purposes
+// In production, use a proper database
+let users = [...initialUsers]
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,7 +30,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Add new user to the in-memory store
-    users.push({ username, password })
+    users = [...users, { username, password }]
 
     return NextResponse.json({ success: true, message: "User created successfully" })
   } catch {
